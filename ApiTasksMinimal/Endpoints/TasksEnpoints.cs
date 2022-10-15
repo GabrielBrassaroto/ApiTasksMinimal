@@ -44,6 +44,20 @@ namespace ApiTasksMinimal.Endpoints
                 return Results.Ok();
             });
 
+
+
+            app.MapDelete("/taks/{id}", async (GetConnection connectionGetter, int id) => {
+
+                using var con = await connectionGetter();
+                var deleted = con.Get<Task>(id);
+
+                if (deleted is null)
+                    return Results.NotFound();
+
+                con.Delete(deleted);
+                return Results.Ok(deleted);
+            });
+
         }
     }
 }
