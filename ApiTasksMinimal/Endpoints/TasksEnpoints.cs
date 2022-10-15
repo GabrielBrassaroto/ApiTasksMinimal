@@ -37,6 +37,13 @@ namespace ApiTasksMinimal.Endpoints
                 return Results.Created($"/tasks/{id}", Task);
             });
 
+            app.MapPut("/taks", async (GetConnection connectionGetter, Task Task) => {
+
+                using var con = await connectionGetter();
+                var id = con.Update(Task);
+                return Results.Ok();
+            });
+
         }
     }
 }
